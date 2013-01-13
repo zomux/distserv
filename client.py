@@ -7,9 +7,9 @@ import json
 from multiprocessing import Process
 from twisted.internet import reactor
 
-SERVER_HOST = 'localhost'
+SERVER_HOST = 'distserv.uaca.com'
 SERVER_PORT = 8123
-CLIENT_PROCESSES = 2
+CLIENT_PROCESSES = 5
 
 class DistClient(Protocol):
     def dataReceived(self, data):
