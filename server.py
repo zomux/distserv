@@ -66,6 +66,8 @@ class DistservFactory(Factory):
             if not client.isBusy:
                 allClientsAreBusy = False
                 data, queryConnection = self.waitingPool.pop(0)
+                if not queryConnection.alive():
+                    break
                 self.queryPool[name] = queryConnection
                 client.doTask(data)
                 break
@@ -147,11 +149,16 @@ class WebServer(Resource):
             return "[Error] Unknown JSONP Format!"
 
     def doResponse(self, data):
+        if self.request.finished:
+            return
         if data.startswith("{"):
             self.request.write("%s(%s)" % (self.request.args["callback"][0], data))
         else:
             self.request.write(data)
         self.request.finish()
+
+    def alive(self):
+        return not self.request.finished
 
 if __name__ == '__main__':
     print "Distserv Server Started:", VERSION
