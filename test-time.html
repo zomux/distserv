@@ -9,7 +9,7 @@
 
 distserv_query = function(param, callback){
   $.ajax({
-          url:    "http://localhost:8125/status",
+          url:    "http://distserv.uaca.com:8125/hp-parser",
           dataType:"jsonp",
           data:{param: JSON.stringify(param)},
           success:callback,
@@ -19,8 +19,8 @@ distserv_query = function(param, callback){
       });
 };
 
-distserv_query(null, function(response){
-  document.write(response.clients);
+distserv_query({"sentence":"hi, i am a cat."}, function(response){
+  document.write(response.result);
 });
 </script>
 </body>
