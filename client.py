@@ -12,6 +12,13 @@ SERVER_PORT = 8123
 CLIENT_PROCESSES = 5
 
 class DistClient(Protocol):
+
+    def connectionMade(self):
+        """
+        Regularly reconnect.
+        """
+        reactor.callLater(5*60, self.transport.loseConnection)
+
     def dataReceived(self, data):
         """
         @type data: str
