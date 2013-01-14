@@ -6,6 +6,7 @@ from datetime import datetime
 import json
 from multiprocessing import Process
 from twisted.internet import reactor
+import random
 
 SERVER_HOST = 'distserv.uaca.com'
 SERVER_PORT = 8123
@@ -17,7 +18,8 @@ class DistClient(Protocol):
         """
         Regularly reconnect.
         """
-        reactor.callLater(5*60, self.transport.loseConnection)
+        delay = random.randint(5*60,10*60)
+        reactor.callLater(delay, self.transport.loseConnection)
 
     def dataReceived(self, data):
         """
@@ -51,20 +53,20 @@ class DistClient(Protocol):
 
 class DistClientFactory(ReconnectingClientFactory):
     def startedConnecting(self, connector):
-        print 'Started to connect.'
+        print '[DistClientFactory] Started to connect.'
 
     def buildProtocol(self, addr):
-        print 'Connected.'
-        print 'Resetting reconnection delay'
+        print '[DistClientFactory] Connected.'
+        # print '[DistClientFactory] Resetting reconnection delay'
         self.resetDelay()
         return DistClient()
 
     def clientConnectionLost(self, connector, reason):
-        print 'Lost connection.  Reason:', reason
+        print '[DistClientFactory] Lost connection.  Reason:', reason
         ReconnectingClientFactory.clientConnectionLost(self, connector, reason)
 
     def clientConnectionFailed(self, connector, reason):
-        print 'Connection failed. Reason:', reason
+        print '[DistClientFactory] Connection failed. Reason:', reason
         ReconnectingClientFactory.clientConnectionFailed(self, connector,
                                                          reason)
 
