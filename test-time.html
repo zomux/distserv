@@ -9,7 +9,7 @@
 
 distserv_query = function(param, callback){
   $.ajax({
-          url:    "http://localhost:8125/hp-parser",
+          url:    "http://distserv.uaca.com:8125/hp-parser",
           dataType:"jsonp",
           data:{param: JSON.stringify(param)},
           success:callback,
