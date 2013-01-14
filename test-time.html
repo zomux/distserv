@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 
-distserv_query = function(param, callback){
+distserv_query = function(param, callback, callback_error){
   $.ajax({
           url:    "http://distserv.uaca.com:8125/hp-parser",
           dataType:"jsonp",

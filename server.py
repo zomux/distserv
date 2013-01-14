@@ -3,6 +3,7 @@ from twisted.protocols.basic import LineReceiver
 from twisted.internet import reactor
 from threading import Lock
 import json
+import time
 
 mutex = Lock()
 
@@ -30,6 +31,7 @@ class Distserv(Protocol):
 
     def doTask(self, data):
         self.isBusy = True
+        print "[%s]" % time.ctime(), data
         self.transport.write(data)
 
 
