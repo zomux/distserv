@@ -8,7 +8,7 @@ from multiprocessing import Process
 from twisted.internet import reactor
 import random
 
-SERVER_HOST = 'distserv.uaca.com'
+SERVER_HOST = 'serv.uaca.com'
 SERVER_PORT = 8123
 CLIENT_PROCESSES = 5
 
